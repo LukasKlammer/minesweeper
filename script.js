@@ -44,22 +44,24 @@ function fillFields() {
     }
 }
 
-function openField(x, y) {
-    console.log('openField(x, y)', x, y);
+function openField(x, y, norender) {
     let field = getField(x, y);
-    console.log(field);
-    if (!field.hasBomb && !field.revealed && !field.dummy) {
+    if(field.hasBomb || field.number > 0) {
         field.revealed = true;
-        openField(x-1,y-1);
-        openField(x,y-1);
-        openField(x+1,y-1);
-        openField(x-1,y);
-        openField(x+1,y);
-        openField(x-1,y+1);
-        openField(x,y+1);
-        openField(x+1,y+1);
+    }else if (!field.hasBomb && !field.revealed && !field.dummy) {
+        field.revealed = true;
+        openField(x-1,y-1, true);
+        openField(x,y-1, true);
+        openField(x+1,y-1, true);
+        openField(x-1,y, true);
+        openField(x+1,y, true);
+        openField(x-1,y+1, true);
+        openField(x,y+1, true);
+        openField(x+1,y+1, true);
     }
-    render();
+    if(!norender) {
+        render();
+    }
 }
 
 function getField(x, y) {
