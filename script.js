@@ -2,23 +2,28 @@ let fields = [];
 
 function init() {
     fillFields();
-    render();
     placeBomb();
+    render();
 }
 
 function render() {
     document.getElementById('game').innerHTML = '';
     for (let x = 0; x < 10; x++) {
         for (let y = 0; y < 10; y++) {
+            let field = getField(x,y);
             document.getElementById('game').innerHTML +=/*html*/`
              <div onclick="openField(${x}, ${y})" class="field" id="field(${x},${y})"></div>
             `;
-            let field = getField(x, y);
             if (field.revealed) {
                 document.getElementById(`field(${x},${y})`).classList.add('field-revealed');
+                if(field.number > 0) {
+                    document.getElementById(`field(${x},${y})`).classList.add('field-' + field.number);
+                }
+
                 if (field.hasBomb) {
                     document.getElementById(`field(${x},${y})`).classList.add('field-bomb');
                 }
+     
             }
         }
     }
@@ -47,14 +52,25 @@ function openField(x, y) {
 }
 
 function getField(x, y) {
-    return fields.find(element => element.x == x && element.y == y);
+    return fields.find(element => element.x == x && element.y == y) || {number:0};
 }
 
 function placeBomb() {
     for (let i = 0; i <= 10; i++) {
-        let fieldId = Math.floor(Math.random() * 100);
+        let filteredFields = fields.filter(f => !f.hasBomb);
+        let fieldId = Math.floor(Math.random() * filteredFields.length);
         console.log('Eine Bombe sollte bei field Nummer ', fieldId);
-        fields[fieldId].hasBomb = true;
+        filteredFields[fieldId].hasBomb = true;
+        let x = filteredFields[fieldId].x;
+        let y = filteredFields[fieldId].y;
+        getField(x - 1, y - 1).number++;
+        getField(x, y - 1).number++;
+        getField(x + 1, y - 1).number++;
+        getField(x - 1, y).number++;
+        getField(x + 1, y).number++;
+        getField(x - 1, y + 1).number++;
+        getField(x, y + 1).number++;
+        getField(x + 1, y + 1).number++;
     }
     console.log(fields);
 }

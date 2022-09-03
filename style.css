@@ -50,6 +50,16 @@ h1 {
     background-image: url("img/buttons/field_revealed.png");
 }
 
+.field-1 {
+    background-image: url("img/buttons/02_\ 1.png");
+}
+.field-2 {
+    background-image: url("img/buttons/02_2.png");
+}
+.field-3 {
+    background-image: url("img/buttons/02_3.png");
+}
+
 .field-bomb {
     background-image:  url("img/buttons/mine.png");
 }
