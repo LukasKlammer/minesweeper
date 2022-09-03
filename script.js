@@ -45,14 +45,25 @@ function fillFields() {
 }
 
 function openField(x, y) {
+    console.log('openField(x, y)', x, y);
     let field = getField(x, y);
     console.log(field);
-    field.revealed = true;
+    if (!field.hasBomb && !field.revealed && !field.dummy) {
+        field.revealed = true;
+        openField(x-1,y-1);
+        openField(x,y-1);
+        openField(x+1,y-1);
+        openField(x-1,y);
+        openField(x+1,y);
+        openField(x-1,y+1);
+        openField(x,y+1);
+        openField(x+1,y+1);
+    }
     render();
 }
 
 function getField(x, y) {
-    return fields.find(element => element.x == x && element.y == y) || {number:0};
+    return fields.find(element => element.x == x && element.y == y) || {number:0, dummy:true};
 }
 
 function placeBomb() {
