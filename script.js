@@ -58,3 +58,32 @@ function placeBomb() {
     }
     console.log(fields);
 }
+
+function bombDetecion() {
+    for (let i = 0; i < 100; i++) {
+        if (fields[i - 11].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i - 10].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i - 9].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i - 1].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i + 1].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i + 9].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i + 10].hasBomb) {
+            fields[i].number++;
+        }
+        if (fields[i + 11].hasBomb) {
+            fields[i].number++;
+        }
+    }
+}
